@@ -1,4 +1,5 @@
 from constraint import Problem, AllDifferentConstraint
+from visualization import Visualization
 
 def solve_zebra_puzzle():
     # Create the problem instance
@@ -98,13 +99,48 @@ def solve_zebra_puzzle():
         print("\nFull solution:")
         print("House | Nationality | Color | Candy | Drink | Pet")
         print("-" * 50)
+        
+        # Prepare data for visualization
+        solution_data = {
+            'nationality': [],
+            'color': [],
+            'candy': [],
+            'drink': [],
+            'pet': []
+        }
+        
         for house in houses:
-            nationality = nationalities[solution[nationalities[house-1]]-1]
-            color = colors[solution[colors[house-1]]-1]
-            candy = candies[solution[candies[house-1]]-1]
-            drink = drinks[solution[drinks[house-1]]-1]
-            pet = pets[solution[pets[house-1]]-1]
-            print(f"{house:5} | {nationality:12} | {color:6} | {candy:10} | {drink:12} | {pet}")
+            nationality = next(k for k, v in solution.items() if v == house and k in nationalities)
+            color = next(k for k, v in solution.items() if v == house and k in colors)
+            candy = next(k for k, v in solution.items() if v == house and k in candies)
+            drink = next(k for k, v in solution.items() if v == house and k in drinks)
+            pet = next(k for k, v in solution.items() if v == house and k in pets)
+            
+            solution_data['nationality'].append(nationality)
+            solution_data['color'].append(color)
+            solution_data['candy'].append(candy)
+            solution_data['drink'].append(drink)
+            solution_data['pet'].append(pet)
+            
+            print(f"{house:5} | {nationality:11} | {color:5} | {candy:9} | {drink:13} | {pet:6}")
+        
+        # Create visualizations
+        print("\nGenerating visualizations...")
+        visualizer = Visualization()
+        
+        # Update statistics
+        num_constraints = len(problem._constraints)
+        num_variables = len(problem._variables)
+        solutions_found = len(solutions)
+        visualizer.update_stats(num_constraints, num_variables, solutions_found)
+        
+        # Create all visualizations
+        visualizer.create_house_layout(solution_data)
+        visualizer.create_constraint_graph()
+        visualizer.create_solution_matrix(solution_data)
+        visualizer.create_step_by_step(solution_data)
+        visualizer.create_statistics()
+        visualizer.create_summary(solution_data)
     else:
         print("No solution found")
 

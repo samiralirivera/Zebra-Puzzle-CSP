@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Zebra Puzzle CSP Implementation
 
 This project implements the classic Zebra Puzzle (also known as Einstein's Puzzle) as a Constraint Satisfaction Problem (CSP) using Python.
@@ -40,3 +41,6 @@ The program will output:
 - The house number where the zebra lives
 - The house number where water is drunk
 - A complete breakdown of all house assignments
+=======
+# Zebra-Puzzle-CSP
+>>>>>>> 5ccc2edd48270f4c85c16e289b579e67d4dbc103
